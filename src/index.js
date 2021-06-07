@@ -12,7 +12,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors())
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/data", {useUnifiedTopology:true, useNewUrlParser:true, autoIndex:false}).then(() => {
+const uri = "mongodb+srv://gabriel:KYrLeF3DvS98Z4V@login.xxdka.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+
+mongoose.connect(uri || "mongodb://localhost/data", {useUnifiedTopology:true, useNewUrlParser:true, autoIndex:false}).then(() => {
     console.log("sucsess");
 }).catch((err) => {
     console.log("error:"+err)
