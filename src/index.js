@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors())
 
-mongoose.connect(process.env.MONGO_URL || "mongodb://localhost/data", {useUnifiedTopology:true, useNewUrlParser:true, autoIndex:false}).then(() => {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/data", {useUnifiedTopology:true, useNewUrlParser:true, autoIndex:false}).then(() => {
     console.log("sucsess");
 }).catch((err) => {
     console.log("error:"+err)
