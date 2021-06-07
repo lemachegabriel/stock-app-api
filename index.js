@@ -18,9 +18,11 @@ mongoose.connect(process.env.MONGO_URI || "mongodb://localhost/data", {useUnifie
 })
 require('./src/models/user')
 
-
 app.use('/api', require('./src/routes'))
 
-
+app.get('/', (req, res) => {
+    res.send('WORKKK!')
+  })
+  
 
 app.listen(process.env.Port || 3000);
