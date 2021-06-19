@@ -16,14 +16,11 @@ module.exports = {
     async auth_cookies(req, res){
         res.setHeader(
             "Set-Cookie",
-            cookie.serialize("token", req.body.token, {
+            cookie.serialize("token", req.body.token, { 
               httpOnly: true,
               secure: process.env.NODE_ENV !== "development",
-              maxAge: 60 * 60,
-              sameSite: "strict",
-              path: "/",
-            })
-          );
+              maxAge: 60 * 60
+            }));
           res.statusCode = 200;
           res.json({ success: true });
     },
