@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken')
 const authconfig = require('../config/auth.json')
 const cookie= require('cookie')
 
+require("dotenv").config();
+
 module.exports = {
     async index(req, res) {
         const user = await User.find();
@@ -18,7 +20,7 @@ module.exports = {
               httpOnly: true,
               secure: process.env.NODE_ENV !== "development",
               maxAge: 60 * 60,
-              sameSite: "lax",
+              sameSite: "None",
               path: "/",
             })
           );
