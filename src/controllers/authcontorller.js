@@ -20,7 +20,7 @@ module.exports = {
               httpOnly: true,
               secure: process.env.NODE_ENV !== "development",
               maxAge: 60 * 60,
-              sameSite: "None",
+              sameSite: "strict",
               path: "/",
             })
           );
