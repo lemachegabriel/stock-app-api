@@ -3,6 +3,7 @@ const User = mongoose.model('User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const authconfig = require('../config/auth.json')
+const cookies= require('cookies')
 
 module.exports = {
     async index(req, res) {
@@ -24,8 +25,18 @@ module.exports = {
         const token = jwt.sign({id: user.id}, authconfig.secret, {
             expiresIn: 86400
         })
-
         res.send({user,token});
+
+        res.setHeader(
+            "Set-Cookie",
+            cookie.serialize("token", req.body.token, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV !== "development",
+              maxAge: 60 * 60,
+              sameSite: "strict",
+              path: "/",
+            })
+          );
     },
     async store(req, res) {
         const {email} = req.body;
