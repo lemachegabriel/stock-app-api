@@ -3,13 +3,27 @@ const User = mongoose.model('User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const authconfig = require('../config/auth.json')
-const cookies= require('cookies')
+const cookie= require('cookie')
 
 module.exports = {
     async index(req, res) {
         const user = await User.find();
 
         return res.json(user);
+    },
+    async auth_cookies(req, res){
+        res.setHeader(
+            "Set-Cookie",
+            cookie.serialize("token", req.body.token, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV !== "development",
+              maxAge: 60 * 60,
+              sameSite: "strict",
+              path: "/",
+            })
+          );
+          res.statusCode = 200;
+          res.json({ success: true });
     },
     async auth(req, res) {
         const {email, password} = req.body;
@@ -27,16 +41,6 @@ module.exports = {
         })
         res.send({user,token});
 
-        res.setHeader(
-            "Set-Cookie",
-            cookie.serialize("stock.token", token, {
-              httpOnly: true,
-              secure: process.env.NODE_ENV !== "development",
-              maxAge: 60 * 60,
-              sameSite: "strict",
-              path: "/",
-            })
-          );
     },
     async store(req, res) {
         const {email} = req.body;
