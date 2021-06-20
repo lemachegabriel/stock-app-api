@@ -14,13 +14,10 @@ module.exports = {
         return res.json(user);
     },
     async auth_cookies(req, res){
-        res.setHeader(
-            "Set-Cookie",
-            cookie.serialize("token", req.body.token, { 
-              httpOnly: true,
-              secure: process.env.NODE_ENV !== "development",
-              maxAge: 60 * 60
-            }));
+        res.cookie("stock-token", req.body.token,{
+            maxAge:60*60,
+            httpOnly:true,
+        })
           res.statusCode = 200;
           res.json({ success: true });
     },
