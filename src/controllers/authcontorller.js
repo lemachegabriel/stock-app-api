@@ -15,7 +15,7 @@ module.exports = {
     },
     async auth_cookies(req, res){
         res.cookie("stock-token", req.body.token,{
-            maxAge:60*60*24,
+            maxAge:new Date(new Date().getTime()+100*1000),
             //httpOnly:true,
         })
           res.statusCode = 200;
