@@ -3,7 +3,8 @@ const User = mongoose.model('User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const authconfig = require('../config/auth.json')
-const cookie= require('cookie')
+const cookie = require('cookie')
+const cookieParser = require('cookie-parser');
 
 require("dotenv").config();
 
@@ -15,8 +16,8 @@ module.exports = {
     },
     async auth_cookies(req, res){
         res.cookie("stock-token", req.body.token,{
-            maxAge:new Date(new Date().getTime()+100*1000),
-            //httpOnly:true,
+            maxAge:60*60*24,
+            httpOnly:true,    
         })
           res.statusCode = 200;
           res.json({ success: true });
