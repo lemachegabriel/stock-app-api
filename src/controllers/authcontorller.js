@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const authconfig = require('../config/auth.json')
 const cookie = require('cookie')
-const cookieParser = require('cookie-parser');
 
 require("dotenv").config();
 
