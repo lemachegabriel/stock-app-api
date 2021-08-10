@@ -18,6 +18,7 @@ module.exports = {
             httpOnly:true,    
         })
           res.statusCode = 200;
+          res.json({ success: true });
     },
     async auth(req, res) {
         const {email, password} = req.body;
