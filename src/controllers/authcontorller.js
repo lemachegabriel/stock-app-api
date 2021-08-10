@@ -14,11 +14,10 @@ module.exports = {
     },
     async auth_cookies(req, res){
         res.cookie("stock-token", req.body,{
-            maxAge:60*60*24*10,
+            maxAge:86400    ,
             httpOnly:true,    
         })
           res.statusCode = 200;
-          res.json({ success: true });
     },
     async auth(req, res) {
         const {email, password} = req.body;
