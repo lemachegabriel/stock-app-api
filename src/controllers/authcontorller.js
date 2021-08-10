@@ -13,7 +13,7 @@ module.exports = {
         return res.json(user);
     },
     async auth_cookies(req, res){
-        res.cookie("stock-token", req.body.token,{
+        res.cookie("stock-token", req.body,{
             maxAge:60*60*24*10,
             httpOnly:true,    
         })
