@@ -37,8 +37,8 @@ module.exports = {
         })
         res.send({user,token});
         res.cookie("stock-token", JSON.stringify(token),{
-            maxAge:60*60*24,
-            httpOnly:true,    
+            expires : new Date(Date.now() + 900000),
+            httpOnly: true,    
         })
 
     },
