@@ -3,7 +3,6 @@ const User = mongoose.model('User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const authconfig = require('../config/auth.json')
-const cookie = require('cookie')
 
 require("dotenv").config();
 
@@ -15,7 +14,7 @@ module.exports = {
     },
     async auth_cookies(req, res){
         res.cookie("stock-token", req.body.token,{
-            maxAge:60*60*24,
+            maxAge:60*60*24*10,
             httpOnly:true,    
         })
           res.statusCode = 200;
@@ -36,10 +35,6 @@ module.exports = {
             expiresIn: 86400
         })
         res.send({user,token});
-        res.cookie("stock-token", token,{
-            expires : new Date(Date.now() + 900000),
-            httpOnly: true,    
-        })
 
     },
     async store(req, res) {

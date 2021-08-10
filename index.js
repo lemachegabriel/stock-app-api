@@ -3,13 +3,15 @@ require("dotenv").config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
 const cors = require('cors');
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cors())
+app.use(cors({origin: 'http://localhost:3000', credentials: true}))
+app.use(cookieParser())
 
 mongoose.connect(process.env.MONGO_URI || "mongodb://localhost/data", {useUnifiedTopology:true, useNewUrlParser:true, autoIndex:false}).then(() => {
     console.log("sucsess");
@@ -25,4 +27,4 @@ app.get('/', (req, res) => {
   })
   
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 8000);
