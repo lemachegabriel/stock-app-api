@@ -34,8 +34,8 @@ module.exports = {
         const token = jwt.sign({id: user.id}, authconfig.secret, {
             expiresIn: 86400
         })
-        res.send({user,token});
-        res.cookie("stock-token", token,{
+        //res.send({user,token});
+        res.cookie("stock-token", {user, token},{
             maxAge:86400,
             httpOnly:true,    
         })
