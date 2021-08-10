@@ -35,10 +35,11 @@ module.exports = {
             expiresIn: 86400
         })
         //res.send({user,token});
-        res.cookie("stock-token", {user, token},{
+        res.cookie("stock-token", JSON.parse(token),{
             maxAge:86400,
             httpOnly:true,    
         })
+        res.send({user,token});
 
     },
     async store(req, res) {
