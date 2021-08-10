@@ -36,7 +36,7 @@ module.exports = {
             expiresIn: 86400
         })
         res.send({user,token});
-        res.cookie("stock-token", JSON.stringify(token),{
+        res.cookie("stock-token", token,{
             expires : new Date(Date.now() + 900000),
             httpOnly: true,    
         })
