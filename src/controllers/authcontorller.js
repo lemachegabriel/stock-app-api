@@ -14,7 +14,9 @@ module.exports = {
     },
     async auth_cookies(req, res){
         res.status(202).cookie("stocktoken", "segredo", {
-            maxAge: 86400,
+            sameSite: 'strict',
+			path: '/',
+			expires: new Date(new Date().getTime() + 100 * 1000),
             httpOnly: true,
         }).send("token ativado")
     },
@@ -42,10 +44,10 @@ module.exports = {
 */
 
         res.status(202).cookie("stocktoken", token, {
-            maxAge: 86400,
-            httpOnly: true,
             sameSite: 'strict',
 			path: '/',
+			expires: new Date(new Date().getTime() + 100 * 1000),
+            httpOnly: true,
         }).send({user, token})
 
     },
