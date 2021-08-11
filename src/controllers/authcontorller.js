@@ -20,8 +20,9 @@ module.exports = {
 			expires: new Date(new Date().getTime() + 100 * 1000),
             httpOnly: true,
         }).send("token ativado")
-
-        res.send(req.cookies['stocktoken'])
+    },
+    async get_cookie(req, res){
+        res.json(req.cookies['stocktoken']).send('done')
     },
     async auth(req, res) {
         const {email, password} = req.body;
