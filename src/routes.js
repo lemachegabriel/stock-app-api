@@ -4,6 +4,6 @@ const routes = express.Router();
 
 routes.post('/register', authcontorller.store);
 routes.post('/auth', authcontorller.auth)
-routes.post('/cookies', authcontorller.auth_cookies)
+routes.get('/cookies', authcontorller.auth_cookies)
 
 module.exports = routes;
