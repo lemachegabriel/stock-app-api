@@ -14,7 +14,7 @@ module.exports = {
     },
     async auth_cookies(req, res){
         res.status(202).cookie("stocktoken", "segredo", {
-            //sameSite: 'strict',
+            sameSite: 'lax',
 			path: '/',
 			expires: new Date(new Date().getTime() + 100 * 1000),
             httpOnly: true,
