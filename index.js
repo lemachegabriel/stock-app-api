@@ -10,7 +10,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cors({origin: 'http://localhost:3000', credentials: true}))
+app.use(cors({origin: process.env.APP_URL, credentials: true}))
 app.use(cookieParser())
 
 mongoose.connect(process.env.MONGO_URI || "mongodb://localhost/data", {useUnifiedTopology:true, useNewUrlParser:true, autoIndex:false}).then(() => {
