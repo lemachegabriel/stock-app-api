@@ -21,7 +21,7 @@ module.exports = {
             httpOnly: true,
         }).send("token ativado")
 
-        console.log(req.cookies['stocktoken'])
+        res.send(req.cookies['stocktoken'])
     },
     async auth(req, res) {
         const {email, password} = req.body;
