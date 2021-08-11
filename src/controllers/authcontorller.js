@@ -44,6 +44,7 @@ module.exports = {
         res.status(202).cookie("stocktoken", token, {
             maxAge: 86400,
             httpOnly: true,
+            secure: true,
         }).send({user, token})
 
     },
