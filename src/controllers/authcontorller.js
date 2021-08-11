@@ -12,17 +12,17 @@ module.exports = {
 
         return res.json(user);
     },
-    async auth_cookies(req, res){
-        res.status(202).cookie("stocktoken", "segredo", {
-            //sameSite: 'strict',
-            secure: true,
-			path: '/',
-			expires: new Date(new Date().getTime() + 100 * 1000),
-            httpOnly: true,
-        }).send("token ativado")
-    },
-    async get_cookie(req, res){
-        res.json(req.cookies['stock-token2']).send('done')
+    async verifyJWT(req, res){
+        const token = req.cookies['stock-token2']
+        if (!token) 
+            return res.status(401).send({ auth: false, message: 'Token não informado.'})
+             
+        jwt.verify(token, secret, function(err, decoded) { 
+            if (err) 
+                return res.status(500).send({ auth: false, message: 'Token inválido.' }); 
+        req.userId = decoded.id; 
+        console.log("User Id: " + decoded.id)
+        })
     },
     async auth(req, res) {
         const {email, password} = req.body;
