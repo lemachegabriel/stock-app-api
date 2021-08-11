@@ -13,12 +13,10 @@ module.exports = {
         return res.json(user);
     },
     async auth_cookies(req, res){
-        res.cookie("stock-token", req.body,{
-            maxAge:86400,
-            httpOnly:true,    
-        })
-          res.status(200)
-          res.json({ success: true });
+        res.status(202).cookie("stocktoken", "segredo", {
+            maxAge: 86400,
+            httpOnly: true,
+        }).send("token ativado")
     },
     async auth(req, res) {
         const {email, password} = req.body;
