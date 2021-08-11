@@ -17,7 +17,7 @@ module.exports = {
             maxAge:86400,
             httpOnly:true,    
         })
-          res.statusCode = 200;
+          res.status(200)
           res.json({ success: true });
     },
     async auth(req, res) {
@@ -34,12 +34,19 @@ module.exports = {
         const token = jwt.sign({id: user.id}, authconfig.secret, {
             expiresIn: 86400
         })
-        //res.send({user,token});
-        res.cookie("stock-token", JSON.parse(token),{
-            maxAge:86400,
-            httpOnly:true,    
-        })
+        /*
         res.send({user,token});
+        res.statusCode = 200
+        res.cookie("stock-token", "segredo",{
+            maxAge:86400,
+            //httpOnly:true,    
+        })
+*/
+
+        res.status(202).cookie("stocktoken", token, {
+            maxAge: 86400,
+            httpOnly: true,
+        }).send({user, token})
 
     },
     async store(req, res) {
