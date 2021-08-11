@@ -20,6 +20,8 @@ module.exports = {
 			expires: new Date(new Date().getTime() + 100 * 1000),
             httpOnly: true,
         }).send("token ativado")
+
+        console.log(req.cookies['stocktoken'])
     },
     async auth(req, res) {
         const {email, password} = req.body;
@@ -35,17 +37,10 @@ module.exports = {
         const token = jwt.sign({id: user.id}, authconfig.secret, {
             expiresIn: 86400
         })
-        /*
-        res.send({user,token});
-        res.statusCode = 200
-        res.cookie("stock-token", "segredo",{
-            maxAge:86400,
-            //httpOnly:true,    
-        })
-*/
 
         res.status(202).cookie("stocktoken", token, {
             //sameSite: 'strict',
+            secure: true,
 			path: '/',
 			expires: new Date(new Date().getTime() + 100 * 1000),
             httpOnly: true,
