@@ -22,7 +22,7 @@ module.exports = {
         }).send("token ativado")
     },
     async get_cookie(req, res){
-        res.json(req.cookies['stocktoken']).send('done')
+        res.json(req.cookies['stock-token2']).send('done')
     },
     async auth(req, res) {
         const {email, password} = req.body;
@@ -39,7 +39,7 @@ module.exports = {
             expiresIn: 86400
         })
 
-        res.status(202).cookie("stocktoken", token, {
+        res.status(202).cookie("stock-token2", token, {
             //sameSite: 'strict',
             secure: true,
 			path: '/',
