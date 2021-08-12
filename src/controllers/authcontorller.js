@@ -21,7 +21,7 @@ module.exports = {
             if (err) 
                 return res.status(500).send({ auth: false, message: 'Token inválido.' }); 
         req.userId = decoded.id; 
-        console.log("User Id: " + decoded.id)
+        res.json("User Id: " + decoded.id)
         })
     },
     async auth(req, res) {
