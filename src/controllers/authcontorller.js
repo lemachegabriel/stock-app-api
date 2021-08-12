@@ -43,7 +43,7 @@ module.exports = {
             //sameSite: 'strict',
             secure: true,
 			path: '/',
-			expires: 86400,
+			expires: new Date(Date.now() + 24 * 60 * 60),
             httpOnly: true,
         }).send({user, token})
 
