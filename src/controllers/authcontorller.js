@@ -20,8 +20,11 @@ module.exports = {
         jwt.verify(token, authconfig.secret, function(err, decoded) { 
             if (err) 
                 return res.status(500).send({ auth: false, message: 'Token inválido.' }); 
-        req.userId = decoded.id; 
-        res.json(decoded.id)
+        
+        const ID = decoded.id;
+        const user = await User.findOne(ID).select('+password')
+
+        res.status(200).send(user)
         })
     },
     async auth(req, res) {
