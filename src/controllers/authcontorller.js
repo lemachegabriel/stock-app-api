@@ -21,7 +21,7 @@ module.exports = {
             if (err) 
                 return res.status(500).send({ auth: false, message: 'Token inválido.' }); 
         req.userId = decoded.id; 
-        res.json("User Id: " + decoded.id)
+        res.json(decoded.id)
         })
     },
     async auth(req, res) {
@@ -43,7 +43,8 @@ module.exports = {
             //sameSite: 'strict',
             secure: true,
 			path: '/',
-			expires: new Date(new Date().getTime() + 100 * 1000),
+			expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+            maxAge: 86400,
             httpOnly: true,
         }).send({user, token})
 
