@@ -14,8 +14,6 @@ module.exports = {
     },
     async verifyJWT(req, res){
         const token = req.cookies['stock-token2']
-        const ID = decoded.id;
-        const user = await User.findOne(ID).select('+password')
         if (!token) 
             return res.status(401).send({ auth: false, message: 'Token não informado.'})
              
@@ -23,7 +21,7 @@ module.exports = {
             if (err) 
                 return res.status(500).send({ auth: false, message: 'Token inválido.' }); 
         
-        
+        const user = User.findOne(decoded.id).select('+password')
 
         res.status(200).send(user)
         })
