@@ -19,12 +19,12 @@ module.exports = {
              
         jwt.verify(token, authconfig.secret, function(err, decoded) { 
             if (err) 
-                return res.status(500).send({ auth: false, message: 'Token inválido.' }); 
-        
-        const user = User.findOne(decoded.id).select('+password')
-
-        res.status(200).send(user)
+                return res.status(500).send({ auth: false, message: 'Token inválido.' });
+            req.UserId = decoded.id
         })
+        const ID = req.UserId
+        const user = await User.findById(ID).exec()
+        res.status(200).send(user)
     },
     async auth(req, res) {
         const {email, password} = req.body;
