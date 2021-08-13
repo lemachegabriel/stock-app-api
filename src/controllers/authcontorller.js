@@ -45,7 +45,7 @@ module.exports = {
             //sameSite: 'strict',
             secure: true,
 			path: '/',
-			expires: new Date(Date.now() + 24 * 60 * 60),
+			expires: new Date(Date.now() + 24 * 60 * 60 * 100),
             httpOnly: true,
         }).send({user, token})
 
@@ -63,11 +63,21 @@ module.exports = {
                 expiresIn: 86400
             })
             
-            res.send({user, token});
+            res.status(202).cookie("stock-token2", token, {
+                //sameSite: 'strict',
+                secure: true,
+                path: '/',
+                expires: new Date(Date.now() + 24 * 60 * 60),
+                httpOnly: true,
+            }).send({user, token})
+
         }catch(err){
             return res.status(400).send({error: "Registro falho"})
         }
         
+    },
+    async logout(req, res) {
+        res.status(200).clearCookie("stock-token2").send("logout")
     },
     async update(req, res) {
         const user = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
