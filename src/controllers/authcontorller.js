@@ -31,7 +31,7 @@ module.exports = {
         const user = await User.findOne({email}).select('+password')
 
         if(!user){
-            return res.status(400).send({err: "Usuario não encontrado"})
+            return res.status(400).send({error: "Usuario não encontrado"})
         }
         if(!await bcrypt.compare(password, user.password)){
             return res.status(400).send({error: "Senha invalida"})
@@ -45,7 +45,7 @@ module.exports = {
             //sameSite: 'strict',
             secure: true,
 			path: '/',
-			expires: new Date(Date.now() + 24 * 60 * 60 * 100),
+			expires: new Date(Date.now() + 24 * 60 * 60 * 10000),
             httpOnly: true,
         }).send({user, token})
 
@@ -67,7 +67,7 @@ module.exports = {
                 //sameSite: 'strict',
                 secure: true,
                 path: '/',
-                expires: new Date(Date.now() + 24 * 60 * 60),
+                expires: new Date(Date.now() + 24 * 60 * 60 * 10000),
                 httpOnly: true,
             }).send({user, token})
 
