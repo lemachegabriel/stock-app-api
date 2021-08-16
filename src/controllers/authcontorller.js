@@ -37,7 +37,7 @@ module.exports = {
             return res.status(400).send({error: "Senha invalida"})
         }
         user.password = undefined
-        const token = jwt.sign({id: user.id}, authconfig.secret, {
+        const token = jwt.sign({id: user.id}, process.env.AUTH_KEY, {
             expiresIn: 86400
         })
 
@@ -51,15 +51,18 @@ module.exports = {
 
     },
     async store(req, res) {
-        const {email} = req.body;
+        const {name, email} = req.body;
         try{
             if(await User.findOne({email})){
-                return res.status(400).send({ error: "Usuario ja existe" })
+                return res.status(400).send({ error: "Email ja existe" })
+            }
+            if(await User.findOne({name})){
+                return res.status(400).send({ error: "Nome de usuario ja existe" })
             }
 
             const user = await User.create(req.body);
 
-            const token = jwt.sign({id: user.id}, authconfig.secret, {
+            const token = jwt.sign({id: user.id}, process.env.AUTH_KEY, {
                 expiresIn: 86400
             })
             
