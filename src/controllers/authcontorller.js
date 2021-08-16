@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const authconfig = require('../config/auth.json')
 
 require("dotenv").config();
 
