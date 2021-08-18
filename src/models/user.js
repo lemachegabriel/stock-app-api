@@ -22,6 +22,10 @@ const UserSchema = new Schema({
         type : Date,
         default : Date.now,
     },
+    money : {
+        type: Number,
+        default : 1000
+    }
 });
 
 UserSchema.pre('save', async function(next) {
