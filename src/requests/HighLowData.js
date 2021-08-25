@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const stock = mongoose.model('stocks_information')
 
 module.exports = {
-    async GetVar() {
+    async GetVar(req, resp) {
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
@@ -19,6 +19,8 @@ module.exports = {
             console.log(err)
         })
 
+        return resp.json(data)
+/*
         for(let i=0; i<data.length; i++){
             let datares = await stock.findOne({'ticker': data[i]["code"]}) 
             if(datares){
@@ -29,5 +31,6 @@ module.exports = {
                 //await stock.create({'ticker': data[i]['code']})
             }
         }
+*/
     }
 }
