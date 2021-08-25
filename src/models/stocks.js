@@ -6,12 +6,8 @@ const Stocks = new Schema({
         type: String,
         required: true
     },
-    open:{
-        type: Number,
-        required: true
-    },
-    close:{
-        type: Number,
+    name:{
+        type:String,
         required: true
     },
     date: {

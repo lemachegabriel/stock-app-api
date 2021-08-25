@@ -1,4 +1,3 @@
-const axios = require('axios')
 const mongoose = require('mongoose');
 const stock = mongoose.model('stocks_information')
 
@@ -281,34 +280,20 @@ module.exports = {
             "AZUL4",
             "B3SA3"
         ]
-        const HEADER = {'User-Agent' : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"}
-        let RANGE = '1D'
-        let INTERVAL = '1d'
-    
         for(let i=0; i<datas.length; i++){
-            await sleep(1500)
-            let open, close, stockName
+            await sleep(900)
+            let stockName
             if(await stock.findOne({'ticker': datas[i]})){
                 console.log('ja feito')
             }else{
-                let url = `https://query1.finance.yahoo.com/v8/finance/chart/${datas[i]}.SA?region=US&lang=en-US&includePrePost=false&interval=${INTERVAL}&useYfid=true&range=${RANGE}&corsDomain=finance.yahoo.com&.tsrc=finance`
-                await axios.get(url, {headers:HEADER}).then((res) => {
-                    stockName = datas[i]
-                    open = res.data['chart']['result'][0]['indicators']['quote'][0]['open'][0]
-                    close = res.data['chart']['result'][0]['indicators']['quote'][0]['close'][0]
-
-                    open = Math.round(open * 100)/100
-                    close = Math.round(close * 100)/100
-                    
-                    console.log(open, close, stockName)
-                    stock.create({"ticker": stockName, "open": open, "close": close})
-                    }).catch((err) =>{
-                        console.log(err)    
-                    })
+                stockName = datas[i]
+                console.log(stockName)
+                stock.create({"ticker": stockName})
+            
+                }
             } 
         }
     }
-}
 
 
 

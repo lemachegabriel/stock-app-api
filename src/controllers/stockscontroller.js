@@ -3,7 +3,7 @@ const stock = mongoose.model('stocks_information')
 
 module.exports = {
     async index(req, res) {
-        const ativos = await stock.find();
+        const ativos = await stock.find({}, 'name ticker -_id');
 
         return res.json(ativos);
     },
