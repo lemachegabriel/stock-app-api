@@ -16,7 +16,7 @@ module.exports = {
         if (!token) 
             return res.status(401).send({ auth: false, message: 'Token não informado.'})
              
-        jwt.verify(token, process.env.AUTH_KEY, function(err, decoded) { 
+        jwt.verify(token, process.env.AUTH_KEY, (err, decoded) => { 
             if (err) 
                 return res.status(500).send({ auth: false, message: 'Token inválido.' });
             req.UserId = decoded.id

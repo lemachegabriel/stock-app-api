@@ -17,10 +17,12 @@ mongoose.connect(process.env.MONGO_URI || "mongodb://localhost/data", {useUnifie
 })
 require('./src/models/user')
 require('./src/models/stocks')
+require('./src/models/portifolio')
 
 app.use(express.json())
 app.use('/api', require('./src/routes/routes'))
 app.use('/quotes', require('./src/routes/stockRoutes'))
+app.use('/portfolio', require('./src/routes/portfolio'))
 
 app.get('/', (req, res) => {
     res.send('WORKKK!')
