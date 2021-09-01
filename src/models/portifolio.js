@@ -8,6 +8,9 @@ const Stocks = Schema({
     price: {
         type: Number,
     },
+    quantity: {
+        type: Number,
+    },
     date:{
         type: Date,
         default: Date.now()

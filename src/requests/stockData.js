@@ -18,7 +18,8 @@ module.exports = {
 
             open = Math.round(open * 100)/100
             close = Math.round(close * 100)/100
-            vari = (close / open - 1) * 100        
+            vari = (close / open - 1) * 100    
+            console.log('chameiuiiii')    
         })
         return res.json({open, close, vari})
     } 

@@ -10,7 +10,7 @@ const app = express();
 app.use(cors({origin: process.env.APP_URL, credentials: true}))
 app.use(cookieParser())
 
-mongoose.connect(process.env.MONGO_URI || "mongodb://localhost/data", {useUnifiedTopology:true, useNewUrlParser:true, autoIndex:false}).then(() => {
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost/data", {useUnifiedTopology:true, useNewUrlParser:true, autoIndex:false, useFindAndModify: false }).then(() => {
     console.log("sucsess");
 }).catch((err) => {
     console.log("error:"+err)
