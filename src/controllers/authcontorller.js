@@ -15,7 +15,7 @@ module.exports = {
         const token = req.cookies['stock-token2']
         if (!token) 
             return res.status(401).send({ auth: false, message: 'Token não informado.'})
-             
+            
         jwt.verify(token, process.env.AUTH_KEY, (err, decoded) => { 
             if (err) 
                 return res.status(500).send({ auth: false, message: 'Token inválido.' });
@@ -37,7 +37,7 @@ module.exports = {
         }
         user.password = undefined
         const token = jwt.sign({id: user.id}, process.env.AUTH_KEY, {
-            expiresIn: 86400
+            expiresIn: 24 * 60 * 60 * 100
         })
 
         res.status(202).cookie("stock-token2", token, {

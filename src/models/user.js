@@ -21,10 +21,6 @@ const UserSchema = new Schema({
     createdAt : {
         type : Date,
         default : Date.now(),
-    },
-    money : {
-        type: Number,
-        default : 1000
     }
 });
 

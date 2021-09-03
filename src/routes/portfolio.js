@@ -2,9 +2,10 @@ const express = require('express');
 const portfolioController = require('../controllers/portfoliocontroller')
 const router = express.Router();
 
-//router.get('/index', portfolioController.index);
+router.post('/sell', portfolioController.sell)
 router.post('/create', portfolioController.create);
-router.post('/update', portfolioController.update)
-router.post('/user', portfolioController.userStocks)
+router.post('/buy', portfolioController.buy)
+router.get('/user', portfolioController.userStocks)
+router.post('/update', portfolioController.updatePortfolio)
 
 module.exports = router; 

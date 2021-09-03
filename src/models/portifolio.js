@@ -22,6 +22,10 @@ const Portfolio = new Schema({
         type:String,
         required:true
     },
+    money:{
+        type:Number,
+        default:1000
+    },
     portfolio:[Stocks]
 })
 
