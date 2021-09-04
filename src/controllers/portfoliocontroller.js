@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken')
 module.exports = {
     async create(req, res){
         const data = await Portfolio.create(req.body)
-
         return res.json(data)
     },
 
@@ -24,7 +23,8 @@ module.exports = {
         if(price <= 0){
             return res.status(500).send({message: 'Error preço invalido'})
         }
-        const postData = {"$push" : {"portfolio" : [{"ticker" : ticker,"price" : price,"quantity" : quantity}]}}
+        const Money = (price * quantity) * -1
+        const postData = {"$inc": {"money": Money} ,"$push" : {"portfolio" : [{"ticker" : ticker,"price" : price,"quantity" : quantity}]}}
         const data = await Portfolio.findOneAndUpdate({"owner": ID}, postData, {new: true})
         return res.json(data)
     },
@@ -40,14 +40,17 @@ module.exports = {
             req.UserId = decoded.id
         })
         const ID = req.UserId
-        const {ticker} = req.body
-        const postData = {"$pull" : {"portfolio" :{"ticker" : ticker}}}
+        const {ticker, price, quantity} = req.body
+
+        const Money = (price * quantity) 
+        const postData = {"$inc": {"money": Money} ,"$pull" : {"portfolio" :{"ticker" : ticker}}}
         const data = await Portfolio.findOneAndUpdate({"owner": ID}, postData, {safe: true})
 
         return res.json(data)
     },
 
     async updatePortfolio(req, res){
+        const {ticker, quantity, price} = req.body
         const token = req.cookies['stock-token2']
         if (!token) 
             return res.status(401).send({ auth: false, message: 'Token não informado.'})
@@ -58,13 +61,27 @@ module.exports = {
             req.UserId = decoded.id
         })
         const ID = req.UserId
-        const {ticker, quantity, price, oldQuant, oldPrice} = req.body
-        const adjPrice = ((price * quantity) + (oldPrice * oldQuant)) /  (quantity + oldQuant)
+        /////////////////////////////////////////////////////////////////////////////////////////
+        const portfolio = await Portfolio.findOne({"owner": ID})
+        let i
+        for(i=0; i<portfolio["portfolio"].length; i++){
+            if(portfolio["portfolio"][i]["ticker"] == ticker){break}
+        }
+        const dataFil = portfolio["portfolio"][i]
+        const oldPrice = dataFil["price"], oldQuant = dataFil["quantity"]
+        ////////////////////////////////////////////////////////////////////////////////////////
+        let adjPrice, Money = (price * quantity) * -1
+        if(quantity>0){
+            adjPrice = ((price * quantity) + (oldPrice * oldQuant)) /  (quantity + oldQuant)
+        }else{adjPrice = oldPrice}
+        adjPrice = Math.round(adjPrice * 100)/100
+    
+        ///////////////////////////////////////////////////////////////////////////////////////
         const query = {"owner": ID, "portfolio.ticker": ticker}
-        const postData = {"$inc": {"portfolio.$.quantity": quantity}, "$set": {"portfolio.$.price": adjPrice}}
-        const data = await Portfolio.updateOne(query, postData)
+        const postData = {"$inc": {"money": Money, "portfolio.$.quantity": quantity}, "$set": {"portfolio.$.price": adjPrice}}
+        const update = await Portfolio.updateOne(query, postData)
 
-        return res.json(data)
+        return res.json(update)
     },
 
     async userStocks(req, res){
@@ -79,8 +96,6 @@ module.exports = {
         })
         const ID = req.UserId
         const data = await Portfolio.findOne({"owner": ID})
-
         return res.json(data)
     }
-    
 }
